@@ -1,4 +1,4 @@
-import speech_recognition as sr
+# import speech_recognition as sr
 import pyttsx3
 import cv2
 
@@ -10,7 +10,7 @@ engine.say("Hello World")
 
 # Get user supplied values
 imagePath = ""
-cascPath = ""
+cascPath = "cascades/haarcascade_fontalface_default.xml"
 
 # Create the haar cascade
 faceCascade = cv2.CascadeClassifier(cascPath)
@@ -26,3 +26,6 @@ faces = faceCascade.detectMultiScale(
     minSize=(30, 30),
     flags=cv2.CASCADE_SCALE_IMAGE
 )
+
+for x, y, width, height in faces:
+    print(x + " : " + y + " : " + y + " : " + width + " : " + height)
