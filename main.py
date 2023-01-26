@@ -9,7 +9,7 @@ engine.setProperty('voices', 'voices[0].id')
 engine.say("Hello World")
 
 # Get user supplied values
-imagePath = ""
+imagePath = "C:/Users/Derry/PycharmProjects/HCI_Project_1.2/savedImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
 
 # Create the haar cascade
@@ -28,4 +28,11 @@ faces = faceCascade.detectMultiScale(
 )
 
 for x, y, width, height in faces:
-    print(x + " : " + y + " : " + y + " : " + width + " : " + height)
+    print("Working")
+    print(x)
+    print(y)
+    print(width)
+    print(height)
+    cv2.rectangle(image, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=2)
+
+cv2.imwrite("test2.jpg", image)
