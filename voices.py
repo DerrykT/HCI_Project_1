@@ -46,4 +46,4 @@ def start():
     # get_formatted_photo(command)
 
 
-# start()
+start()
