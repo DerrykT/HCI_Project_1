@@ -3,7 +3,7 @@
 import cv2
 import pyttsx3
 
-from voices import speak
+from voice_util import speak
 
 imagePath = "testImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
