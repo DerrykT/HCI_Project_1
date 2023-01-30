@@ -5,6 +5,13 @@ import pyttsx3
 
 from voice_util import speak
 
+fullImagePath = "testImage.jpg"
+topLeftPath = "top_left.jpg"
+topRightPath = "top_right.jpg"
+bottomLeftPath = "bottom_left.jpg"
+bottomRightPath = "bottom_right.jpg"
+
+
 imagePath = "testImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
 
@@ -36,11 +43,11 @@ def divide_photo():
     # Rotate image 90 COUNTERCLOCKWISE
     l1 = cv2.rotate(l1, cv2.ROTATE_90_COUNTERCLOCKWISE)
     # save image
-    cv2.imwrite("bt.jpg", l1)
+    cv2.imwrite("bottom_left.jpg", l1)
     # rotate image to 90 COUNTERCLOCKWISE
     l2 = cv2.rotate(l2, cv2.ROTATE_90_COUNTERCLOCKWISE)
     # save image
-    cv2.imwrite("one_horisont_2.jpg", l2)
+    cv2.imwrite("top_left.jpg", l2)
 
     # Dividing right image horizontally
     # rotate image 90 CLOCKWISE
@@ -57,13 +64,13 @@ def divide_photo():
     r1 = cv2.rotate(r1, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # save image
-    cv2.imwrite("second_vhorisont_1.jpg", r1)
+    cv2.imwrite("bottom_right.jpg", r1)
 
     # rotate image 90 COUNTERCLOCKWISE
     r2 = cv2.rotate(r2, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # save image
-    cv2.imwrite("second_horisont_2.jpg", r2)
+    cv2.imwrite("top_right.jpg", r2)
 
 
 def take_photo():
