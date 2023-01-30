@@ -8,8 +8,10 @@ engine.setProperty('voices', 'voices[0].id')
 
 engine.say("Hello World")
 
+
+
 # Get user supplied values
-imagePath = "C:/Users/Derry/PycharmProjects/HCI_Project_1.2/savedImage.jpg"
+imagePath = "C:/Users/Derry/PycharmProjects/HCI_Project_1.2/testImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
 
 # Create the haar cascade
