@@ -1,5 +1,5 @@
 import cv2
-img = cv2.imread('savedImage.jpg')
+img = cv2.imread('testImage.jpg')
 #start vertical divide
 height = img.shape[0]
 width = img.shape[1]
