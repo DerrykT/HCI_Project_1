@@ -3,7 +3,7 @@
 import cv2
 import pyttsx3
 
-from voice_util import speak
+import voice_utils
 
 fullImagePath = "testImage.jpg"
 topLeftPath = "top_left.jpg"
@@ -11,12 +11,12 @@ topRightPath = "top_right.jpg"
 bottomLeftPath = "bottom_left.jpg"
 bottomRightPath = "bottom_right.jpg"
 
-
 imagePath = "testImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
 
 # Create the haar cascade
 faceCascade = cv2.CascadeClassifier(cascPath)
+
 
 def divide_photo():
     img = cv2.imread('testImage.jpg')
@@ -108,22 +108,21 @@ def detect_face():
 
     return len(faces) > 0
 
+
 def count_down():
-    speak("3")
-    speak("2")
-    speak("1")
+    voice_utils.speak("3")
+    voice_utils.speak("2")
+    voice_utils.speak("1")
+
 
 def get_formatted_photo(command):
     count_down()
     take_photo()
     divide_photo()
 
-    in_full_photo = detect_face(fullImagePath)
+    in_full_photo = detect_face()
     if not in_full_photo:
-        speak("You are not in frame. Try moving around to get in frame.")
+        voice_utils.speak("You are not in frame. Try moving around to get in frame.")
         return get_formatted_photo(command)
 
     # in_top_left = detect_face()
-
-
-

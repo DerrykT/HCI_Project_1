@@ -1,7 +1,7 @@
 import pyttsx3
 import speech_recognition as sr
 
-from photo_utils import get_formatted_photo
+import photo_utils
 
 engine = pyttsx3.init('sapi5')
 engine.setProperty('voices', 'voices[0].id')
@@ -45,7 +45,7 @@ def start():
             speak("Issue understanding command. Please try again.")
 
     speak("Heard " + command)
-    get_formatted_photo(command)
+    photo_utils.get_formatted_photo(command)
 
 
 start()
