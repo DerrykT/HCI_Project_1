@@ -1,23 +1,6 @@
 import pyttsx3
 import speech_recognition as sr
 
-
-# r = sr.Recognizer()
-#
-# with sr.Microphone() as source:
-#     engine = pyttsx3.init('sapi5')
-#     voices = engine.getProperty('voices')
-#     engine.setProperty('voices', 'voices[0].id')
-#
-#     engine.say("Do you want your face in the top right, top left, bottom right, or bottom left?")
-#     engine.runAndWait()
-#
-#     r.pause_threshold = 0.7
-#     audio = r.listen(source)
-#     Query = r.recognize_google(audio, language='en-in')
-#
-#     print("the query is printed='", Query, "'")
-
 def speak(audio):
     r = sr.Recognizer()
 
@@ -31,6 +14,19 @@ def speak(audio):
 
 def take_command():
     r = sr.Recognizer()
+
+# Device index 1 is the second microphone on the local machines list of available mic's
+
+# sr.Microphone.list_microphone_names()    <-- this command lists available mics on local machine
+
+# ['Microsoft Sound Mapper - Input', 
+# 'Microphone (Realtek(R) Audio)', 
+# 'Microsoft Sound Mapper - Output', 
+# 'Speakers (Realtek(R) Audio)', 
+# 'Primary Sound Capture Driver', 
+# 'Microphone (Realtek(R) Audio)',
+# 'Primary Sound Driver', ...] 
+
 
     with sr.Microphone(device_index=1) as source:
 
