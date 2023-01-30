@@ -1,30 +1,14 @@
 import pyttsx3
 import speech_recognition as sr
+import cv2
 
+import divide_image
 
-# r = sr.Recognizer()
-#
-# with sr.Microphone() as source:
-#     engine = pyttsx3.init('sapi5')
-#     voices = engine.getProperty('voices')
-#     engine.setProperty('voices', 'voices[0].id')
-#
-#     engine.say("Do you want your face in the top right, top left, bottom right, or bottom left?")
-#     engine.runAndWait()
-#
-#     r.pause_threshold = 0.7
-#     audio = r.listen(source)
-#     Query = r.recognize_google(audio, language='en-in')
-#
-#     print("the query is printed='", Query, "'")
+engine = pyttsx3.init('sapi5')
+engine.setProperty('voices', 'voices[0].id')
+
 
 def speak(audio):
-    r = sr.Recognizer()
-
-    engine = pyttsx3.init('sapi5')
-    voices = engine.getProperty('voices')
-    engine.setProperty('voices', 'voices[0].id')
-
     engine.say(audio)
     engine.runAndWait()
 
@@ -52,7 +36,17 @@ def take_command():
     return Query
 
 
-speak("Speak")
-command = take_command()
-speak(command)
+def start():
+    command = take_command()
 
+    if command == 'top left' or command == 'top right' or command == 'bottom left' or command == 'bottom right':
+        speak("You said" + command)
+    else:
+        speak("Issue understanding command. Please try again.")
+        start()
+
+    get_formatted_photo()
+
+
+speak("Do you want to be positioned in the top left, top right, bottom left, or bottom right?")
+start()
