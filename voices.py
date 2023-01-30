@@ -1,8 +1,5 @@
 import pyttsx3
 import speech_recognition as sr
-import cv2
-
-import divide_image
 
 engine = pyttsx3.init('sapi5')
 engine.setProperty('voices', 'voices[0].id')
@@ -27,26 +24,26 @@ def take_command():
             Query = r.recognize_google(audio, language='en-in')
 
         except Exception as e:
-
-            # Displaying exception
-            print(e)
-            print("Say that again sir")
             return "NONE"
 
     return Query
 
 
 def start():
-    command = take_command()
+    command = ''
+    speak("Do you want to be positioned in the top left, top right, bottom left, or bottom right?")
 
-    if command == 'top left' or command == 'top right' or command == 'bottom left' or command == 'bottom right':
-        speak("You said" + command)
-    else:
-        speak("Issue understanding command. Please try again.")
-        start()
+    while not (
+            command == 'top left' or command == 'top right' or command == 'bottom left' or command == 'bottom right'):
 
-    get_formatted_photo()
+        command = take_command()
+
+        if not (
+                command == 'top left' or command == 'top right' or command == 'bottom left' or command == 'bottom right'):
+            speak("Issue understanding command. Please try again.")
+
+    speak("Heard " + command)
+    # get_formatted_photo(command)
 
 
-speak("Do you want to be positioned in the top left, top right, bottom left, or bottom right?")
-start()
+# start()

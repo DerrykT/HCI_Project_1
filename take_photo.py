@@ -5,16 +5,11 @@ import pyttsx3
 
 from voices import speak
 
-imagePath = "C:/Users/Derry/PycharmProjects/HCI_Project_1.2/testImage.jpg"
+imagePath = "testImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
 
 # Create the haar cascade
 faceCascade = cv2.CascadeClassifier(cascPath)
-
-# Read the image
-image = cv2.imread(imagePath)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
 
 def divide_photo():
     img = cv2.imread('testImage.jpg')
@@ -92,6 +87,10 @@ def take_photo():
 
 
 def detect_face():
+    # Read the image
+    image = cv2.imread(imagePath)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
     faces = faceCascade.detectMultiScale(
         gray,
         scaleFactor=1.1,
@@ -111,4 +110,7 @@ def get_formatted_photo(command):
     count_down()
     take_photo()
     divide_photo()
+
+
+get_formatted_photo("Hello")
 

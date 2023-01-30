@@ -46,6 +46,7 @@ while True:
         camera_capture = get_image()
         filename = "testImage.jpg"
         cv2.imwrite(filename,camera_capture)
+
 show_image()
 
 # Release the VideoCapture object
