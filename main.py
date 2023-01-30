@@ -2,7 +2,10 @@ import cv2
 from tkinter import Tk, Label
 from PIL import Image, ImageTk
 
-# This program will access the users webcam, display the current picture in real time, 
+from voice_util import start
+
+
+# This program will access the users webcam, display the current picture in real time,
 # and then the user has two options: 'q' to quit & 't' to save photo to current directory. 
 
 def show_image():
@@ -43,9 +46,10 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
     elif cv2.waitKey(1) & 0xFF == ord("t"):
-        camera_capture = get_image()
-        filename = "testImage.jpg"
-        cv2.imwrite(filename,camera_capture)
+        # camera_capture = get_image()
+        # filename = "testImage.jpg"
+        # cv2.imwrite(filename,camera_capture)
+        start()
 
 show_image()
 

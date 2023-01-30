@@ -118,6 +118,12 @@ def get_formatted_photo(command):
     take_photo()
     divide_photo()
 
+    in_full_photo = detect_face(fullImagePath)
+    if not in_full_photo:
+        speak("You are not in frame. Try moving around to get in frame.")
+        return get_formatted_photo(command)
 
-get_formatted_photo("Hello")
+    # in_top_left = detect_face()
+
+
 
