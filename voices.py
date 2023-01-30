@@ -32,7 +32,7 @@ def speak(audio):
 def take_command():
     r = sr.Recognizer()
 
-    with sr.Microphone() as source:
+    with sr.Microphone(device_index=1) as source:
 
         r.pause_threshold = 0.7
         audio = r.listen(source)
@@ -52,6 +52,7 @@ def take_command():
     return Query
 
 
-speak("Do you want your face in the top right, top left, bottom right, or bottom left?")
+speak("Speak")
 command = take_command()
 speak(command)
+
