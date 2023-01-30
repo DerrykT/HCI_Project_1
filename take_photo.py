@@ -40,7 +40,7 @@ def divide_photo():
     # rotate image to 90 COUNTERCLOCKWISE
     l2 = cv2.rotate(l2, cv2.ROTATE_90_COUNTERCLOCKWISE)
     # save image
-    cv2.imwrite("top_left_2.jpg", l2)
+    cv2.imwrite("top_left.jpg", l2)
 
     # Dividing right image horizontally
     # rotate image 90 CLOCKWISE
@@ -57,13 +57,13 @@ def divide_photo():
     r1 = cv2.rotate(r1, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # save image
-    cv2.imwrite("bottom_right_1.jpg", r1)
+    cv2.imwrite("bottom_right.jpg", r1)
 
     # rotate image 90 COUNTERCLOCKWISE
     r2 = cv2.rotate(r2, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # save image
-    cv2.imwrite("bottom_right_2.jpg", r2)
+    cv2.imwrite("bottom_right.jpg", r2)
 
 
 def take_photo():
