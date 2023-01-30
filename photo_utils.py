@@ -3,7 +3,14 @@
 import cv2
 import pyttsx3
 
-from voices import speak
+from voice_util import speak
+
+fullImagePath = "testImage.jpg"
+topLeftPath = "top_left.jpg"
+topRightPath = "top_right.jpg"
+bottomLeftPath = "bottom_left.jpg"
+bottomRightPath = "bottom_right.jpg"
+
 
 imagePath = "testImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
@@ -63,7 +70,7 @@ def divide_photo():
     r2 = cv2.rotate(r2, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # save image
-    cv2.imwrite("bottom_right.jpg", r2)
+    cv2.imwrite("top_right.jpg", r2)
 
 
 def take_photo():

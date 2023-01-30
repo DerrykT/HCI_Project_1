@@ -1,40 +1,59 @@
-# import speech_recognition as sr
-import pyttsx3
 import cv2
+from tkinter import Tk, Label
+from PIL import Image, ImageTk
 
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voices', 'voices[0].id')
+# This program will access the users webcam, display the current picture in real time, 
+# and then the user has two options: 'q' to quit & 't' to save photo to current directory. 
 
-engine.say("Hello World")
+def show_image():
+    root = Tk()
+    root.title("Current Image")
+
+    image = Image.open("testImage.jpg")
+    photo = ImageTk.PhotoImage(image)
+
+    label = Label(root, image=photo)
+    label.pack()
+
+    root.mainloop()
+
+
+# Create a VideoCapture object to access the webcam
+cap = cv2.VideoCapture(0)
+def get_image():
+    retval, im = cap.read()
+    return im
+
+# Check if the webcam is opened correctly
+if not cap.isOpened():
+    raise Exception("Could not open video device")
+
+while True:
+    # Capture a single frame from the webcam
+    ret, frame = cap.read()
+
+    # Check if the frame was captured correctly
+    if not ret:
+        raise Exception("Could not capture frame")
+
+    # Display the captured frame
+    cv2.imshow("Webcam", frame)
+
+    # Break the loop if the 'q' key is pressed
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+    elif cv2.waitKey(1) & 0xFF == ord("t"):
+        camera_capture = get_image()
+        filename = "testImage.jpg"
+        cv2.imwrite(filename,camera_capture)
+
+show_image()
+
+# Release the VideoCapture object
+cap.release()
+
+# Close all windows
+cv2.destroyAllWindows()
 
 
 
-# Get user supplied values
-imagePath = "C:/Users/Derry/PycharmProjects/HCI_Project_1.2/testImage.jpg"
-cascPath = "cascades/haarcascade_fontalface_default.xml"
-
-# Create the haar cascade
-faceCascade = cv2.CascadeClassifier(cascPath)
-
-# Read the image
-image = cv2.imread(imagePath)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-faces = faceCascade.detectMultiScale(
-    gray,
-    scaleFactor=1.1,
-    minNeighbors=5,
-    minSize=(30, 30),
-    flags=cv2.CASCADE_SCALE_IMAGE
-)
-
-for x, y, width, height in faces:
-    print("Working")
-    print(x)
-    print(y)
-    print(width)
-    print(height)
-    cv2.rectangle(image, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=2)
-
-cv2.imwrite("test2.jpg", image)
