@@ -79,15 +79,13 @@ def start():
     speak("Do you want to be positioned in the top left, top right, bottom left, or bottom right?")
 
     while not (
-            command == 'top left' or command == 'top right' or command == 'bottom left' or command == 'bottom right'
-            or 'top left' in command or 'top right' in command
-            or 'bottom left' in command or 'bottom right' in command):
+            command == 'top left' or command == 'top right'
+            or command == 'bottom left' or command == 'bottom right'):
 
         command = take_command()
 
-        if not (command == 'top left' or command == 'top right' or command == 'bottom left' or command == 'bottom right'
-                or 'top left' in command or 'top right' in command
-                or 'bottom left' in command or 'bottom right' in command):
+        if not (command == 'top left' or command == 'top right'
+                or command == 'bottom left' or command == 'bottom right'):
             speak("Issue understanding command. Please try again.")
 
     speak("Heard " + command)

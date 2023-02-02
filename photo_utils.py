@@ -151,13 +151,13 @@ def get_formatted_photo(command):
 
     if inTopLeft:
         print("Top Left")
-        if command == "top left" or "top left" in command:
+        if command == "top left":
             speak("Found In Frame")
             return
-        elif command == "top right" or "top right" in command:
+        elif command == "top right":
             speak("Found in top left. Move to the right to be in frame.")
             return get_formatted_photo(command)
-        elif command == "bottom left" or "bottom left" in command:
+        elif command == "bottom left":
             speak("Found in top left. Move down to be in frame.")
             return get_formatted_photo(command)
         else:
@@ -168,13 +168,13 @@ def get_formatted_photo(command):
 
     if inTopRight:
         print("Top Right")
-        if command == "top left" or "top left" in command:
+        if command == "top left":
             speak("Found in top right. Move to the left to be in frame.")
             return get_formatted_photo(command)
-        elif command == "top right" or "top right" in command:
+        elif command == "top right":
             speak("Found In Frame")
             return
-        elif command == "bottom left" or "bottom left" in command:
+        elif command == "bottom left":
             speak("Found in top right. Move down and to the left to be in frame.")
             return get_formatted_photo(command)
         else:
@@ -185,13 +185,13 @@ def get_formatted_photo(command):
 
     if inBottomLeft:
         print("Bottom Left")
-        if command == "top left" or "top left" in command:
+        if command == "top left":
             speak("Found in bottom left. Move up to be in frame.")
             return get_formatted_photo(command)
-        elif command == "top right" or "top right" in command:
+        elif command == "top right":
             speak("Found in bottom left. Move up and to the right to be in frame.")
             return get_formatted_photo(command)
-        elif command == "bottom left" or "bottom left" in command:
+        elif command == "bottom left":
             speak("Found In Frame")
             return
         else:
@@ -202,13 +202,13 @@ def get_formatted_photo(command):
 
     if inBottomRight:
         print("Bottom Right")
-        if command == "top left" or "top left" in command:
+        if command == "top left":
             speak("Found in bottom right. Move up and to the left to be in frame.")
             return get_formatted_photo(command)
-        elif command == "top right" or "top right" in command:
+        elif command == "top right":
             speak("Found in bottom right. Move up to be in frame.")
             return get_formatted_photo(command)
-        elif command == "bottom left" or "bottom left" in command:
+        elif command == "bottom left":
             speak("Found in bottom right. Move left to be in frame.")
             return get_formatted_photo(command)
         else:
