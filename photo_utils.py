@@ -2,14 +2,23 @@
 
 import cv2
 import pyttsx3
+from tkinter import Tk, Label
+from PIL import Image, ImageTk
 
-import voice_utils
+engine = pyttsx3.init('sapi5')
+engine.setProperty('voices', 'voices[0].id')
 
-fullImagePath = "testImage.jpg"
-topLeftPath = "top_left.jpg"
-topRightPath = "top_right.jpg"
-bottomLeftPath = "bottom_left.jpg"
-bottomRightPath = "bottom_right.jpg"
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+fullImagePath = "full_image.jpg"
+topLeftPath = "segmented/top_left.jpg"
+topRightPath = "segmented/top_right.jpg"
+bottomLeftPath = "segmented/bottom_left.jpg"
+bottomRightPath = "segmented/bottom_right.jpg"
 
 imagePath = "testImage.jpg"
 cascPath = "cascades/haarcascade_fontalface_default.xml"
@@ -18,8 +27,21 @@ cascPath = "cascades/haarcascade_fontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 
 
+def show_image():
+    root = Tk()
+    root.title("Current Image")
+
+    image = Image.open(fullImagePath)
+    photo = ImageTk.PhotoImage(image)
+
+    label = Label(root, image=photo)
+    label.pack()
+
+    root.mainloop()
+
+
 def divide_photo():
-    img = cv2.imread('testImage.jpg')
+    img = cv2.imread(fullImagePath)
 
     # start vertical divide
     height = img.shape[0]
@@ -43,11 +65,11 @@ def divide_photo():
     # Rotate image 90 COUNTERCLOCKWISE
     l1 = cv2.rotate(l1, cv2.ROTATE_90_COUNTERCLOCKWISE)
     # save image
-    cv2.imwrite("bottom_left.jpg", l1)
+    cv2.imwrite(bottomRightPath, l1)
     # rotate image to 90 COUNTERCLOCKWISE
     l2 = cv2.rotate(l2, cv2.ROTATE_90_COUNTERCLOCKWISE)
     # save image
-    cv2.imwrite("top_left.jpg", l2)
+    cv2.imwrite(topRightPath, l2)
 
     # Dividing right image horizontally
     # rotate image 90 CLOCKWISE
@@ -64,13 +86,13 @@ def divide_photo():
     r1 = cv2.rotate(r1, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # save image
-    cv2.imwrite("bottom_right.jpg", r1)
+    cv2.imwrite(bottomLeftPath, r1)
 
     # rotate image 90 COUNTERCLOCKWISE
     r2 = cv2.rotate(r2, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # save image
-    cv2.imwrite("top_right.jpg", r2)
+    cv2.imwrite(topLeftPath, r2)
 
 
 def take_photo():
@@ -88,14 +110,14 @@ def take_photo():
         temp = camera.read()
 
     camera_capture = get_image()
-    filename = "testImage.jpg"
+    filename = fullImagePath
     cv2.imwrite(filename, camera_capture)
     del (camera)
 
 
-def detect_face():
+def detect_face(filePath):
     # Read the image
-    image = cv2.imread(imagePath)
+    image = cv2.imread(filePath)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     faces = faceCascade.detectMultiScale(
@@ -110,9 +132,9 @@ def detect_face():
 
 
 def count_down():
-    voice_utils.speak("3")
-    voice_utils.speak("2")
-    voice_utils.speak("1")
+    speak("3")
+    speak("2")
+    speak("1")
 
 
 def get_formatted_photo(command):
@@ -120,9 +142,77 @@ def get_formatted_photo(command):
     take_photo()
     divide_photo()
 
-    in_full_photo = detect_face()
-    if not in_full_photo:
-        voice_utils.speak("You are not in frame. Try moving around to get in frame.")
+    inFullPhoto = detect_face(fullImagePath)
+    if not inFullPhoto:
+        speak("You are not in frame. Try moving around to get in frame.")
         return get_formatted_photo(command)
 
-    # in_top_left = detect_face()
+    inTopLeft = detect_face(topLeftPath)
+
+    if inTopLeft:
+        print("Top Left")
+        if command == "top left" or "top left" in command:
+            speak("Found In Frame")
+            return
+        elif command == "top right" or "top right" in command:
+            speak("Found in top left. Move to the right to be in frame.")
+            return get_formatted_photo(command)
+        elif command == "bottom left" or "bottom left" in command:
+            speak("Found in top left. Move down to be in frame.")
+            return get_formatted_photo(command)
+        else:
+            speak("Found in top left. Move down and to the right to be in frame.")
+            return get_formatted_photo(command)
+
+    inTopRight = detect_face(topRightPath)
+
+    if inTopRight:
+        print("Top Right")
+        if command == "top left" or "top left" in command:
+            speak("Found in top right. Move to the left to be in frame.")
+            return get_formatted_photo(command)
+        elif command == "top right" or "top right" in command:
+            speak("Found In Frame")
+            return
+        elif command == "bottom left" or "bottom left" in command:
+            speak("Found in top right. Move down and to the left to be in frame.")
+            return get_formatted_photo(command)
+        else:
+            speak("Found in top right. Move down to be in frame.")
+            return get_formatted_photo(command)
+
+    inBottomLeft = detect_face(bottomLeftPath)
+
+    if inBottomLeft:
+        print("Bottom Left")
+        if command == "top left" or "top left" in command:
+            speak("Found in bottom left. Move up to be in frame.")
+            return get_formatted_photo(command)
+        elif command == "top right" or "top right" in command:
+            speak("Found in bottom left. Move up and to the right to be in frame.")
+            return get_formatted_photo(command)
+        elif command == "bottom left" or "bottom left" in command:
+            speak("Found In Frame")
+            return
+        else:
+            speak("Found in bottom left. Move to the right to be in frame.")
+            return get_formatted_photo(command)
+
+    inBottomRight = detect_face(bottomRightPath)
+
+    if inBottomRight:
+        print("Bottom Right")
+        if command == "top left" or "top left" in command:
+            speak("Found in bottom right. Move up and to the left to be in frame.")
+            return get_formatted_photo(command)
+        elif command == "top right" or "top right" in command:
+            speak("Found in bottom right. Move up to be in frame.")
+            return get_formatted_photo(command)
+        elif command == "bottom left" or "bottom left" in command:
+            speak("Found in bottom right. Move left to be in frame.")
+            return get_formatted_photo(command)
+        else:
+            speak("Found In Frame")
+            return
+
+    show_image()
