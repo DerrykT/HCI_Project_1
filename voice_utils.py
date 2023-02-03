@@ -90,4 +90,4 @@ def start():
 
     speak("Heard " + command)
     print("Heard " + command)
-    photo_utils.get_formatted_photo(command)
+    photo_utils.get_formatted_photo(command, 0)

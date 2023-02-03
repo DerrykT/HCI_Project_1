@@ -8,6 +8,8 @@ from PIL import Image, ImageTk
 engine = pyttsx3.init('sapi5')
 engine.setProperty('voices', 'voices[0].id')
 
+outOfFrameCommands = ["Move to the right.", "Move to original spot.", "Move to the left.", "Move to original spot."]
+
 
 def speak(audio):
     engine.say(audio)
@@ -137,15 +139,15 @@ def count_down():
     speak("1")
 
 
-def get_formatted_photo(command):
+def get_formatted_photo(command, index):
     count_down()
     take_photo()
     divide_photo()
 
     inFullPhoto = detect_face(fullImagePath)
     if not inFullPhoto:
-        speak("You are not in frame. Try moving around to get in frame.")
-        return get_formatted_photo(command)
+        speak("You are not in frame. " + outOfFrameCommands[index])
+        return get_formatted_photo(command, (index + 1) % len(outOfFrameCommands))
 
     inTopLeft = detect_face(topLeftPath)
 
@@ -156,13 +158,13 @@ def get_formatted_photo(command):
             return
         elif command == "top right":
             speak("Found in top left. Move to the right to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         elif command == "bottom left":
             speak("Found in top left. Move down to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         else:
             speak("Found in top left. Move down and to the right to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
 
     inTopRight = detect_face(topRightPath)
 
@@ -170,16 +172,16 @@ def get_formatted_photo(command):
         print("Top Right")
         if command == "top left":
             speak("Found in top right. Move to the left to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         elif command == "top right":
             speak("Found In Frame")
             return
         elif command == "bottom left":
             speak("Found in top right. Move down and to the left to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         else:
             speak("Found in top right. Move down to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
 
     inBottomLeft = detect_face(bottomLeftPath)
 
@@ -187,16 +189,16 @@ def get_formatted_photo(command):
         print("Bottom Left")
         if command == "top left":
             speak("Found in bottom left. Move up to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         elif command == "top right":
             speak("Found in bottom left. Move up and to the right to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         elif command == "bottom left":
             speak("Found In Frame")
             return
         else:
             speak("Found in bottom left. Move to the right to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
 
     inBottomRight = detect_face(bottomRightPath)
 
@@ -204,13 +206,13 @@ def get_formatted_photo(command):
         print("Bottom Right")
         if command == "top left":
             speak("Found in bottom right. Move up and to the left to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         elif command == "top right":
             speak("Found in bottom right. Move up to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         elif command == "bottom left":
             speak("Found in bottom right. Move left to be in frame.")
-            return get_formatted_photo(command)
+            return get_formatted_photo(command, index)
         else:
             speak("Found In Frame")
             return
